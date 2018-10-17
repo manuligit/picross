@@ -1,15 +1,17 @@
 import React from 'react';
-import * as math from 'mathjs';
+import Creator from './Creator';
 
 class Picross extends React.Component {
   constructor() {
     super();
     this.state = {
       matrix: [],
+      curr: [],
       rows: [],
       columns: [],
       example: [],
       num: -1,
+      lives: 3,
     }
   }
 
@@ -20,23 +22,21 @@ class Picross extends React.Component {
     //let example = [[0,0,0],[0,0,1]]
     let example = [[1,0,1,0,1],[1,1,1,1,1],[1,0,1,1,1],[0,0,1,0,0],[1,1,0,0,1]]
 
+    // Create zero matrix for comparison: 
+    //let curr = Array.from(example, Array.from(x => x = 0))
+    let curr = example.map(r => [].concat(r).fill(0));
+    console.log(curr)
 
-    // Get grade if many colors and set num (max):
     let num = 1;
+    console.log('example')
     console.log(example);
     let [rows, columns] = this.drawNumbers(example, num);
     console.log(rows, columns);
-    this.setState({ matrix: example, num, rows, columns }); 
+    this.setState({ matrix: example, num, rows, columns, curr }); 
   }
 
+  // Create the arrays of number rows used for solving the puzzle
   drawNumbers = (matrix, num) => {
-    console.log("drawnumbers")
-    //const { matrix } = this.state; 
-    console.log("matrix", matrix);
-    // Found items are grey
-    // Unfound/overflowing items are red
-    // Normal items are black
-
     // Do columns
     let rows = [];
     let columns = [];
@@ -45,30 +45,17 @@ class Picross extends React.Component {
       rows.push(this.calculateNumbers(row, num));
     });
 
-    //rows = [].concat(...rows);
-    //console.log("rows", rows);
-
     // Transpose the matrix to get the columns: 
     let matrix2 = matrix[0].map((col, i) => matrix.map(row => row[i]));
-    //console.log("matrix", matrix)
-    //console.log("matrix2", matrix2)
     matrix2.forEach(row => {
      columns.push(this.calculateNumbers(row, num));
     });
 
-    //columns = [].concat(...columns);
-    console.log("rows", rows);
-    console.log("columns", columns);
-
     return [rows, columns];
   }
 
+  // Calculate the array of numbers needed for solving one row
   calculateNumbers = (row, num) => {
-    //const { num } = this.state; 
-    //console.log('eeee')
-
-    //let row = [1,0,1,1,0,1,1,1];
-
     let result = row.reduce((accumulator, current) => {
       if (current === num) {
         // If it's the first element, add 1:
@@ -87,20 +74,50 @@ class Picross extends React.Component {
         return accumulator;
     }, []);
 
-    // Remove empty lists
+    // Remove empty lists from results
     let result2 = result.filter(Number);
 
-    console.log("result", result2);
+    // console.log("result", result2);
     return result2;
   }
 
+  handleClick = (param) => (event) => {
+    console.log("klik")
+    let [i, ii] = param;
+    event.preventDefault();
+    const { matrix,num } = this.state;
+    let { lives, curr } = this.state;
+
+    if (matrix[i][ii] === num) {
+      event.target.classList = "box black";
+
+      //check game end condition
+      curr[i][ii] = num;
+      if (JSON.stringify(matrix) === JSON.stringify(curr)) {
+        console.log("You won");
+      } else {
+        this.setState({ curr });
+      }
+
+
+    } else {
+      // Do something to show what went wrong
+      lives = lives-1;
+      if (lives === 0) {
+        console.log("game over");
+      }
+      this.setState({ lives });
+    }
+  } 
+
+
 
   render() {
-    const { matrix, num, rows, columns } = this.state;
+    const { matrix, rows, columns, lives } = this.state;
 
     return(
     <div>
-      <div className="container">
+      {/* <div className="container">
               <div className="box box0"></div>
               {columns.map((e,i) => (
                 <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
@@ -113,16 +130,34 @@ class Picross extends React.Component {
             <div key={`unique ${i}${ii}`} className={ee === num ? "black box" : "box"}></div>
           ))}
         </div>
-      ))};
+      ))}; */}
+
+
+      <div className="container">
+        <div className="box box0"></div>
+          {columns.map((e,i) => (
+            <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
+            ))}
+      </div>
+      {rows.map((e, i) => (
+        <div className="container" key={i}>
+          <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          {matrix[i].map((ee,ii) => (
+            <div key={`unique ${i}${ii}`} className="box boxi" onClick={this.handleClick([i,ii])}></div>
+          ))}
+        </div>
+      ))}
 
       <br />
-
-      <button type="button" onClick={() => this.calculateNumbers([1,0,1,1,0,0,0,0,1,1,1])}> KLIK </button>
-      <button type="button" onClick={() => this.drawNumbers(matrix)}> KLAK </button>
       <br />
+      Lives left: {lives}
       <br />
       Matrix should be: <br />
       {matrix}
+      <br />
+      <br />
+
+      <Creator />
       </div>
     )
   }

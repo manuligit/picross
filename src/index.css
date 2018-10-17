@@ -27,15 +27,6 @@ td {
   border-top: none;
 }
 
-div.things {
-  border: 1px solid black;
-}
-
-div.things:first-child {
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-}
-
 .box0 {
   border-left: none;
   border-top: none;
@@ -48,9 +39,6 @@ div.things:first-child {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-}
-
-.box-row span {
 }
 
 .box-col {
@@ -67,3 +55,6 @@ div.things:first-child {
   margin: 0;
 }
 
+.boxi:hover {
+  background-color: rgb(222, 220, 220);
+}
