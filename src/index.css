@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Kodchasan', sans-serif;
 }
 
 td {
@@ -12,3 +13,57 @@ td {
 .black {
   background-color: black;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.box {
+  width: 30px;
+  height: 30px;
+  border: solid 1px black;
+  border-left: none;
+  border-top: none;
+}
+
+div.things {
+  border: 1px solid black;
+}
+
+div.things:first-child {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.box0 {
+  border-left: none;
+  border-top: none;
+}
+
+.box-row {
+  border-left: none;
+  display: flex;
+  flex-flow: row-reverse;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.box-row span {
+}
+
+.box-col {
+  border-top: none;
+  word-break: break-all;
+  line-height: 1;
+  display: flex;
+  flex-flow: column-reverse;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box-col div {
+  margin: 0;
+}
+

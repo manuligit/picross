@@ -5,7 +5,7 @@ class Picross extends React.Component {
   constructor() {
     super();
     this.state = {
-      matrix: [[1,1,1],[0,1,0],[0,1,0]],
+      matrix: [],
       rows: [],
       columns: [],
       example: [],
@@ -16,18 +16,23 @@ class Picross extends React.Component {
   componentDidMount() {
     // Create example picross for testing:
     //let example = math.matrix([[1,1,1],[0,1,0],[0,1,0]]);
-    let example = [[1,1,1],[0,1,0],[0,1,0]];
+    //let example = [[1,1],[1,0],[0,0],[0,0]];
+    //let example = [[0,0,0],[0,0,1]]
+    let example = [[1,0,1,0,1],[1,1,1,1,1],[1,0,1,1,1],[0,0,1,0,0],[1,1,0,0,1]]
+
+
     // Get grade if many colors and set num (max):
     let num = 1;
     console.log(example);
-    let [rows, columns] = this.drawNumbers(example);
+    let [rows, columns] = this.drawNumbers(example, num);
+    console.log(rows, columns);
     this.setState({ matrix: example, num, rows, columns }); 
   }
 
-  drawNumbers = (matrix) => {
+  drawNumbers = (matrix, num) => {
     console.log("drawnumbers")
     //const { matrix } = this.state; 
-    console.log(matrix)
+    console.log("matrix", matrix);
     // Found items are grey
     // Unfound/overflowing items are red
     // Normal items are black
@@ -36,8 +41,8 @@ class Picross extends React.Component {
     let rows = [];
     let columns = [];
     matrix.forEach(row => {
-      console.log(this.calculateNumbers(row))
-      rows.push(this.calculateNumbers(row));
+      console.log(this.calculateNumbers(row, num))
+      rows.push(this.calculateNumbers(row, num));
     });
 
     //rows = [].concat(...rows);
@@ -48,7 +53,7 @@ class Picross extends React.Component {
     //console.log("matrix", matrix)
     //console.log("matrix2", matrix2)
     matrix2.forEach(row => {
-     columns.push(this.calculateNumbers(row));
+     columns.push(this.calculateNumbers(row, num));
     });
 
     //columns = [].concat(...columns);
@@ -58,8 +63,8 @@ class Picross extends React.Component {
     return [rows, columns];
   }
 
-  calculateNumbers = (row) => {
-    const { num } = this.state; 
+  calculateNumbers = (row, num) => {
+    //const { num } = this.state; 
     //console.log('eeee')
 
     //let row = [1,0,1,1,0,1,1,1];
@@ -92,50 +97,34 @@ class Picross extends React.Component {
 
   render() {
     const { matrix, num, rows, columns } = this.state;
+
     return(
-      <div>
-        {rows}
-      <table>
-        <tbody>
-          {matrix.map((e,i) => (
-            <tr key={i}>
-            {e.map((ee, ii) => (
-              <td key={ii} className={ee === num ? "black" : ""}>{ee}</td>
-            ))}
-          </tr>
+    <div>
+      <div className="container">
+              <div className="box box0"></div>
+              {columns.map((e,i) => (
+                <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
+              ))}
+      </div>
+      {rows.map((e, i) => (
+        <div className="container" key={i}>
+          <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          {matrix[i].map((ee,ii) => (
+            <div key={`unique ${i}${ii}`} className={ee === num ? "black box" : "box"}></div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      ))};
+
+      <br />
 
       <button type="button" onClick={() => this.calculateNumbers([1,0,1,1,0,0,0,0,1,1,1])}> KLIK </button>
       <button type="button" onClick={() => this.drawNumbers(matrix)}> KLAK </button>
-
+      <br />
+      <br />
+      Matrix should be: <br />
+      {matrix}
       </div>
     )
-
-    // return(
-    //   <div>
-    //     {rows}
-    //   <table>
-    //     <tbody>
-    //       {matrix.map((e,i) => (
-    //         <tr key={i}>
-    //         {e.map((ee, ii) => (
-    //           <td key={ii} className={ee === num ? "black" : ""}>{ee}</td>
-    //         ))}
-    //       </tr>
-    //       ))}
-    //     </tbody>
-    //   </table>
-
-    //   <button type="button" onClick={() => this.calculateNumbers([1,0,1,1,0,0,0,0,1,1,1])}> KLIK </button>
-    //   <button type="button" onClick={() => this.drawNumbers()}> KLAK </button>
-
-    //   </div>
-    // )
-
-
-
   }
 }
 
