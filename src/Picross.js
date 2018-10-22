@@ -102,8 +102,6 @@ class Picross extends React.Component {
       } else {
         this.setState({ curr });
       }
-
-
     } else {
       // Do something to show what went wrong
       lives = lives-1;
