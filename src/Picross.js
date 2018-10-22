@@ -20,9 +20,9 @@ class Picross extends React.Component {
     //let example = math.matrix([[1,1,1],[0,1,0],[0,1,0]]);
     //let example = [[1,1],[1,0],[0,0],[0,0]];
     //let example = [[0,0,0],[0,0,1]]
-    let example = [[1,0,1,0,1],[1,1,1,1,1],[1,0,1,1,1],[0,0,1,0,0],[1,1,0,0,1]]
-    //[[0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],[0,0,0,1,0,1,0,1,0,0,0,0,0,0,0],[0,0,1,0,1,0,0,1,0,0,0,0,0,0,0],[0,1,1,0,1,0,1,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,1,1,1,1,0,0,0,0],[1,0,1,0,1,0,1,1,0,0,0,1,0,0,0],[1,0,1,0,1,1,0,0,0,1,0,0,1,0,0],[1,0,1,1,0,0,0,0,1,0,1,0,1,0,0],[1,0,0,0,0,0,0,0,1,0,1,1,0,0,0],[1,0,0,0,0,0,0,0,1,1,0,0,1,0,0],[0,1,0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,1,0,0,0,0,0,0,0,0,1,0,0,0],[0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],[0,0,0,0,0,1,1,1,1,0,0,0,0,0,0]]
-
+    //let example = [[1,0,1,0,1],[1,1,1,1,1],[1,0,1,1,1],[0,0,1,0,0],[1,1,0,0,1]]
+    //let example = [[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[0,0,0,1,0,1,0,1,0,0,0,0,0,0,0],[1,0,1,0,1,0,0,1,0,0,0,0,0,0,0],[0,1,1,0,1,0,1,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,1,1,1,1,0,0,0,0],[1,0,1,0,1,0,1,1,0,0,0,1,0,0,0],[0,0,1,0,1,1,0,0,0,1,0,0,1,0,0],[1,0,1,1,0,0,0,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,1,0,1,1,0,0,0],[1,0,0,0,0,0,0,0,1,1,0,0,1,0,0],[0,1,0,0,0,0,0,0,0,0,0,0,1,0,0],[1,0,1,0,0,0,0,0,0,0,0,1,0,0,0],[0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],[1,0,0,0,0,1,1,1,1,0,0,0,0,0,0]]
+    let example = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1]];
     // Create zero matrix for comparison: 
     //let curr = Array.from(example, Array.from(x => x = 0))
     let curr = example.map(r => [].concat(r).fill(0));
@@ -104,6 +104,7 @@ class Picross extends React.Component {
     } else {
       // Do something to show what went wrong
       lives = lives-1;
+      event.target.classList = "box cross";
       if (lives === 0) {
         console.log("game over");
       }
@@ -115,6 +116,14 @@ class Picross extends React.Component {
 
   render() {
     const { matrix, rows, columns, lives } = this.state;
+    let reducer = ((acc, e) => e.length > acc ? acc = e.length : acc );
+    // Calculate the rows and columns:
+    let max_width = 10*rows.reduce(reducer, 0);
+    let max_height = 16*columns.reduce(reducer, 0);
+    let col_style = { width: `${max_width}px` }
+    let row_style = { height: `${max_height}px` }
+
+    console.log('max_width', max_width);
 
     return(
     <div>
@@ -135,14 +144,16 @@ class Picross extends React.Component {
 
 
       <div className="container">
-        <div className="box box0"></div>
+        <div className="box box0 box-col box-row" style={col_style}></div>
           {columns.map((e,i) => (
             <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
             ))}
       </div>
       {rows.map((e, i) => (
         <div className="container" key={i}>
-          <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          <div className="row-container" style={col_style}>
+            <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          </div>
           {matrix[i].map((ee,ii) => (
             <div key={`unique ${i}${ii}`} className="box boxi" onClick={this.handleClick([i,ii])}></div>
           ))}

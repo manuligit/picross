@@ -27,34 +27,58 @@ td {
   border-top: none;
 }
 
-.box0 {
-  border-left: none;
-  border-top: none;
-}
-
 .box-row {
-  border-left: none;
   display: flex;
   flex-flow: row-reverse;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
+  flex-basis: auto;
+  width: auto;
+  min-width: 30px;
 }
 
 .box-col {
-  border-top: none;
   word-break: break-all;
   line-height: 1;
   display: flex;
   flex-flow: column-reverse;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+  height:auto;
+  min-height:30px;
+}
+
+.box0 {
+  border-left: none;
+  border-top: none;
 }
 
 .box-col div {
   margin: 0;
 }
 
-.boxi:hover {
-  background-color: rgb(222, 220, 220);
+.boxi {
+  padding: 1px;
+}
+
+.cross {
+  position: relative;
+}
+
+.cross:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "x"; /* use the hex value here... */
+    font-size: 13px; 
+    color: rgb(255, 202, 202);
+    text-align: center;
+}
+
+
+.box-row span {
+  letter-spacing: 0.2em;
 }
