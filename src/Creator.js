@@ -118,6 +118,16 @@ handleClick = (param) => (event) => {
 
 render() {
   let { matrix, columns, rows, num } = this.state;
+
+  let reducer = ((acc, e) => e.length > acc ? acc = e.length : acc );
+  // Calculate the rows and columns:
+  let max_width = 10*rows.reduce(reducer, 0);
+  // if (max_width === 0) {
+  //   max_width = 10;
+  // }
+
+  let col_style = { width: `${max_width}px` }
+
   let form = (    
   <div>Enter the size of the picross:
     <form>
@@ -138,14 +148,16 @@ render() {
   return(
     <div>
       <div className="container">
-        <div className="box box0"></div>
+        <div className="box box0" style={col_style}></div>
          {columns.map((e,i) => (
           <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
         ))}
       </div>
       {rows.map((e, i) => (
         <div className="container" key={i}>
-          <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          <div className="row-container" style={col_style}>
+            <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
+          </div>
           {matrix[i].map((ee,ii) => (
             <div key={`unique ${i}${ii}`} className="box boxi" onClick={this.handleClick([i,ii])}></div>
             ))}
@@ -156,9 +168,7 @@ render() {
     <p>Matrix:</p>
     {JSON.stringify(matrix)}      
     </div>
-  )
-  }
-
+  )}
 }
 
 export default Creator

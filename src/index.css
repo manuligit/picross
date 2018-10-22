@@ -78,7 +78,9 @@ td {
     text-align: center;
 }
 
-
 .box-row span {
   letter-spacing: 0.2em;
+}
+.box-row span:hover {
+  background-color: rgb(235, 231, 231);
 }

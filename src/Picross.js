@@ -89,6 +89,9 @@ class Picross extends React.Component {
     const { matrix,num } = this.state;
     let { lives, curr } = this.state;
 
+    //Handle left click: 
+
+    // Handle right click: 
     if (matrix[i][ii] === num) {
       event.target.classList = "box black";
 
@@ -110,7 +113,7 @@ class Picross extends React.Component {
       }
       this.setState({ lives });
     }
-  } 
+  }
 
 
 
@@ -119,30 +122,10 @@ class Picross extends React.Component {
     let reducer = ((acc, e) => e.length > acc ? acc = e.length : acc );
     // Calculate the rows and columns:
     let max_width = 10*rows.reduce(reducer, 0);
-    let max_height = 16*columns.reduce(reducer, 0);
-    let col_style = { width: `${max_width}px` }
-    let row_style = { height: `${max_height}px` }
-
-    console.log('max_width', max_width);
+    let col_style = { width: `${max_width}px` };
 
     return(
     <div>
-      {/* <div className="container">
-              <div className="box box0"></div>
-              {columns.map((e,i) => (
-                <div className="box box-col" key={`col${i}`}>{e.map((el,ii) => <div className="num" key={`${i}${ii}`}>{el}</div>)}</div>
-              ))}
-      </div>
-      {rows.map((e, i) => (
-        <div className="container" key={i}>
-          <div className="box box-row">{e.map((el,ii) => <span key={`${i}${ii}`}>{el}</span>)}</div>
-          {matrix[i].map((ee,ii) => (
-            <div key={`unique ${i}${ii}`} className={ee === num ? "black box" : "box"}></div>
-          ))}
-        </div>
-      ))}; */}
-
-
       <div className="container">
         <div className="box box0 box-col box-row" style={col_style}></div>
           {columns.map((e,i) => (
