@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/picross/static/js/runtime~main.764344af.js"
   },
   {
-    "revision": "ea48ef08d123fc88bae6",
-    "url": "/picross/static/js/main.ea48ef08.chunk.js"
+    "revision": "04a5bb57bc7dce1c6545",
+    "url": "/picross/static/js/main.04a5bb57.chunk.js"
   },
   {
     "revision": "2b037c810d58ac10280f",
     "url": "/picross/static/js/1.2b037c81.chunk.js"
   },
   {
-    "revision": "ea48ef08d123fc88bae6",
-    "url": "/picross/static/css/main.51cd3db3.chunk.css"
+    "revision": "04a5bb57bc7dce1c6545",
+    "url": "/picross/static/css/main.7f6ad312.chunk.css"
   },
   {
-    "revision": "0259bbce6b319ff40951a903815d78dc",
+    "revision": "60ea392ed6f526551c78a3bf92011025",
     "url": "/picross/index.html"
   }
 ];
