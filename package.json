@@ -2,10 +2,9 @@
   "name": "picross",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://manuligit.github.io/picross/",
+  "homepage": "https://manuligit.github.io/picross",
   "dependencies": {
     "gh-pages": "^2.0.1",
-    "mathjs": "^5.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },

@@ -3,13 +3,6 @@
   font-family: 'Kodchasan', sans-serif;
 }
 
-td {
-  height: 30px;
-  width: 30px;
-  border: solid 1px black;
-  color: green;
-}
-
 .black {
   background-color: black;
 }
@@ -21,6 +14,7 @@ td {
 
 .box {
   width: 20px;
+  min-width: 20px;
   height: 20px;
   border: solid 1px black;
   border-left: none;
@@ -36,6 +30,9 @@ td {
   flex-basis: auto;
   width: auto;
   min-width: 30px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+  overflow: hidden;
 }
 
 .box-col {
@@ -81,6 +78,18 @@ td {
 .box-row span {
   letter-spacing: 0.2em;
 }
-.box-row span:hover {
+.box-row span:hover, .box-col .num:hover {
   background-color: rgb(235, 231, 231);
+}
+
+.picross-container {
+  position: absolute;
+}
+
+.picross {
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Picross from './Picross'
-import Creator from './Creator'
+import Game from './Game'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Picross />
+        <Game />
       </div>
     );
   }

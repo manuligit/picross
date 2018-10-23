@@ -117,22 +117,17 @@ handleClick = (param) => (event) => {
 
 
 render() {
-  let { matrix, columns, rows, num } = this.state;
+  let { matrix, columns, rows } = this.state;
 
   let reducer = ((acc, e) => e.length > acc ? acc = e.length : acc );
   // Calculate the rows and columns:
   let max_width = 10*rows.reduce(reducer, 0);
-  // if (max_width === 0) {
-  //   max_width = 10;
-  // }
-
-  let col_style = { width: `${max_width}px` }
+  let col_style = { width: `${max_width}px`, minWidth: '30px'}
 
   let form = (    
   <div>Enter the size of the picross:
     <form>
       <label>
-      Name:
       <input type="number" name="width" onChange={this.handleChange}/>
       <input type="number" name="height" onChange={this.handleChange}/>
       </label>

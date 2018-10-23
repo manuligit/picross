@@ -1,5 +1,4 @@
 import React from 'react';
-import Creator from './Creator';
 
 class Picross extends React.Component {
   constructor() {
@@ -22,27 +21,24 @@ class Picross extends React.Component {
     //let example = [[0,0,0],[0,0,1]]
     //let example = [[1,0,1,0,1],[1,1,1,1,1],[1,0,1,1,1],[0,0,1,0,0],[1,1,0,0,1]]
     //let example = [[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[0,0,0,1,0,1,0,1,0,0,0,0,0,0,0],[1,0,1,0,1,0,0,1,0,0,0,0,0,0,0],[0,1,1,0,1,0,1,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,0,0,0,0,0,0,0],[0,0,1,0,1,0,1,1,1,1,1,0,0,0,0],[1,0,1,0,1,0,1,1,0,0,0,1,0,0,0],[0,0,1,0,1,1,0,0,0,1,0,0,1,0,0],[1,0,1,1,0,0,0,0,1,0,1,0,1,0,0],[0,0,0,0,0,0,0,0,1,0,1,1,0,0,0],[1,0,0,0,0,0,0,0,1,1,0,0,1,0,0],[0,1,0,0,0,0,0,0,0,0,0,0,1,0,0],[1,0,1,0,0,0,0,0,0,0,0,1,0,0,0],[0,0,0,1,1,0,0,0,0,1,1,0,0,0,0],[1,0,0,0,0,1,1,1,1,0,0,0,0,0,0]]
-    let example = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1]];
+    //let example = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1]];
     // Create zero matrix for comparison: 
     //let curr = Array.from(example, Array.from(x => x = 0))
+    // Create matrix sized zero matrix:
+    let example = this.props.matrix;
     let curr = example.map(r => [].concat(r).fill(0));
-    console.log(curr)
 
     let num = 1;
-    console.log('example')
-    console.log(example);
     let [rows, columns] = this.drawNumbers(example, num);
-    console.log(rows, columns);
     this.setState({ matrix: example, num, rows, columns, curr }); 
   }
 
   // Create the arrays of number rows used for solving the puzzle
   drawNumbers = (matrix, num) => {
-    // Do columns
+    // Calculate numbers for rows:
     let rows = [];
     let columns = [];
     matrix.forEach(row => {
-      console.log(this.calculateNumbers(row, num))
       rows.push(this.calculateNumbers(row, num));
     });
 
@@ -55,7 +51,7 @@ class Picross extends React.Component {
     return [rows, columns];
   }
 
-  // Calculate the array of numbers needed for solving one row
+  // Calculate the array of numbers needed for solving a single row
   calculateNumbers = (row, num) => {
     let result = row.reduce((accumulator, current) => {
       if (current === num) {
@@ -83,19 +79,16 @@ class Picross extends React.Component {
   }
 
   handleClick = (param) => (event) => {
-    console.log("klik")
     let [i, ii] = param;
     event.preventDefault();
     const { matrix,num } = this.state;
     let { lives, curr } = this.state;
 
-    //Handle left click: 
-
     // Handle right click: 
     if (matrix[i][ii] === num) {
-      event.target.classList = "box black";
+      event.target.classList = "box boxi black";
 
-      //check game end condition
+      //Check game end condition
       curr[i][ii] = num;
       if (JSON.stringify(matrix) === JSON.stringify(curr)) {
         console.log("You won");
@@ -103,17 +96,42 @@ class Picross extends React.Component {
         this.setState({ curr });
       }
     } else {
-      // Do something to show what went wrong
+      // Draw cross on falsely guessed tile:
       lives = lives-1;
-      event.target.classList = "box cross";
+      event.target.classList = "box boxi cross";
       if (lives === 0) {
+        // TODO: Game over and game reset
+        this.gameReset();
         console.log("game over");
       }
       this.setState({ lives });
     }
   }
 
+  // Resets the game board and lives to the original state
+  gameReset = () => {
+    const { matrix } = this.state;
 
+    // Remove all black squares from DOM:
+    var elements = document.getElementsByClassName("black");
+    console.log(elements)
+
+    while(elements.length > 0) {
+      elements[0].classList.remove("black");
+    }
+
+    // Remove all crosses from the board:
+    elements = document.getElementsByClassName("cross");
+    console.log(elements)
+
+    while(elements.length > 0) {
+      elements[0].classList.remove("cross");
+    }
+
+    // Reset the matrix to starting state:
+    let curr = matrix.map(r => [].concat(r).fill(0));
+    this.setState({ curr, lives: 3 });
+  }
 
   render() {
     const { matrix, rows, columns, lives } = this.state;
@@ -123,7 +141,8 @@ class Picross extends React.Component {
     let col_style = { width: `${max_width}px` };
 
     return(
-    <div>
+    <div className="picross-container">
+     <div className="picross">
       <div className="container">
         <div className="box box0 box-col box-row" style={col_style}></div>
           {columns.map((e,i) => (
@@ -140,17 +159,17 @@ class Picross extends React.Component {
           ))}
         </div>
       ))}
-
+      </div>
+      <div>
       <br />
       <br />
       Lives left: {lives}
-      <br />
+      {/* <br />
       Matrix should be: <br />
       {matrix}
       <br />
-      <br />
-
-      <Creator />
+      <br /> */}
+      </div>
       </div>
     )
   }
