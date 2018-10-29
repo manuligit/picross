@@ -82,10 +82,6 @@
   background-color: rgb(235, 231, 231);
 }
 
-.picross-container {
-  position: absolute;
-}
-
 .picross {
   margin: 0 auto;
   padding: 0;

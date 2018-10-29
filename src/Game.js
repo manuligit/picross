@@ -43,11 +43,22 @@ class Game extends React.Component {
       let i = Math.floor(Math.random() * levels.length);
       let level = levels[i];
 
-      gameframe = <Picross matrix={level}/>
+      gameframe = ( 
+        <div style={{ width: '100%' }}>
+          <Picross matrix={level}/>
+          <br />
+          <button name="picross" type="button" onClick={this.toggle}>Close the game</button>
+        </div> )
     }
 
     if (creator === true) {
-      levelframe = <Creator />
+      levelframe = (
+        <div>
+          <Creator />
+          <br />
+          <button name="creator" type="button" onClick={this.toggle}>Close level creator</button>
+        </div>
+      )
     }
 
     return(

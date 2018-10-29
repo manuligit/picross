@@ -130,7 +130,8 @@ class Picross extends React.Component {
 
     // Reset the matrix to starting state:
     let curr = matrix.map(r => [].concat(r).fill(0));
-    this.setState({ curr, lives: 3 });
+    let lives = 3;
+    this.setState({ curr, lives });
   }
 
   render() {
@@ -138,7 +139,7 @@ class Picross extends React.Component {
     let reducer = ((acc, e) => e.length > acc ? acc = e.length : acc );
     // Calculate the rows and columns:
     let max_width = 10*rows.reduce(reducer, 0);
-    let col_style = { width: `${max_width}px` };
+    let col_style = { width: `${max_width}px`, minWidth: '30px' };
 
     return(
     <div className="picross-container">
